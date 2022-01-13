@@ -40,7 +40,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
   @ExceptionHandler(ClientAlreadyRegistered.class)
   protected ResponseEntity<Object> handleClientAlreadyRegistered(ClientAlreadyRegistered ex) {
     DefaultResponse response =
-        DefaultResponse.builder().CVE_Error("email_duplicado").CVE_Mensaje(ex.getMessage()).build();
+        DefaultResponse.builder().CVE_Error("campo_duplicado").CVE_Mensaje(ex.getMessage()).build();
 
     return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
   }

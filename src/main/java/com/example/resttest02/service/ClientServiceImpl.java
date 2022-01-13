@@ -22,9 +22,17 @@ public class ClientServiceImpl implements ClientService {
 
   @Override
   public ClientDto create(ClientRequest request) {
-    verifyClientExists(request);
+    verifyClientExistsByEmail(request);
+    verifyClientExsistsByUsername(request.getNombre_usuario());
     Client savedClient = saveClientDatabase(request);
     return mapper.clientToClientDto(savedClient);
+  }
+
+  private void verifyClientExsistsByUsername(String username) {
+    Optional<Client> optionalClient = repository.getClientByUsername(username);
+    if (optionalClient.isPresent()){
+      throw new ClientAlreadyRegistered(username);
+    }
   }
 
   private Client saveClientDatabase(ClientRequest request) {
@@ -44,7 +52,7 @@ public class ClientServiceImpl implements ClientService {
     return client;
   }
 
-  private void verifyClientExists(ClientRequest request) {
+  private void verifyClientExistsByEmail(ClientRequest request) {
     String email = request.getCorreo_electronico();
     Optional<Client> optionalClient = repository.getClientByCorreo(email);
 
