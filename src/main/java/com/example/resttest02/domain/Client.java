@@ -1,5 +1,6 @@
 package com.example.resttest02.domain;
 
+import com.example.resttest02.dto.UpdateClientRequest;
 import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -45,5 +46,13 @@ public class Client {
 
   protected void setDateUpdated() {
     this.fecha_actualizacion = new Date().getTime();
+  }
+
+  public void updateClient(Client client, UpdateClientRequest request) {
+    client.setEdad(request.getEdad());
+    client.setEstatura(request.getEstatura());
+    client.setPeso(request.getPeso());
+    client.setGEB(request.getGeb());
+    setDateUpdated();
   }
 }

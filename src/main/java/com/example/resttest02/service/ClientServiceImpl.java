@@ -31,6 +31,7 @@ public class ClientServiceImpl implements ClientService {
     verifyClientByEmail(request);
     verifyClientByUsername(request.getNombre_usuario());
     Client savedClient = saveClientDatabase(request);
+    log.info("success client creation");
     return mapper.clientToClientDto(savedClient);
   }
 
@@ -55,15 +56,14 @@ public class ClientServiceImpl implements ClientService {
   @Override
   public ClientFullDto update(UpdateClientRequest request, String id) {
     Client client = repository.findById(id).orElseThrow(() -> new ClientNotFoundException(id));
-
-    client.setEdad(request.getEdad());
-    client.setEstatura(request.getEstatura());
-    client.setPeso(request.getPeso());
-    client.setGEB(request.getGeb());
-
-    Client updatedClient = repository.save(client);
+    Client updatedClient = updateClient(request, client);
     log.info("the client with id: " + id + " was be updated");
     return mapper.clientToClientFullDto(updatedClient);
+  }
+
+  private Client updateClient(UpdateClientRequest request, Client client) {
+    client.updateClient(client, request);
+    return repository.save(client);
   }
 
   private void verifyClientByUsername(String username) {

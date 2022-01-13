@@ -3,10 +3,10 @@ package com.example.resttest02.domain;
 import com.example.resttest02.dto.ClientDto;
 import com.example.resttest02.dto.ClientFullDto;
 import java.util.Collection;
-import lombok.Builder;
 import lombok.Data;
+import lombok.experimental.SuperBuilder;
 
-@Builder
+@SuperBuilder
 @Data
 public class DefaultResponse {
   private ClientDto dto;

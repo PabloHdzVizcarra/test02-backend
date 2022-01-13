@@ -8,7 +8,6 @@ import com.example.resttest02.dto.UpdateClientRequest;
 import com.example.resttest02.service.ClientService;
 import java.util.Collection;
 import javax.validation.Valid;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
