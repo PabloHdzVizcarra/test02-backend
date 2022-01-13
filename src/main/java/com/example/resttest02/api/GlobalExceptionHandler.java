@@ -2,6 +2,7 @@ package com.example.resttest02.api;
 
 import com.example.resttest02.domain.DefaultResponse;
 import com.example.resttest02.exception.ClientAlreadyRegistered;
+import com.example.resttest02.exception.ClientNotFoundException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,4 +45,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
   }
+
+  @ExceptionHandler(ClientNotFoundException.class)
+  protected ResponseEntity<Object> handleClientNotFoundException(ClientNotFoundException ex) {
+    DefaultResponse response =
+        DefaultResponse.builder().CVE_Error("id_invalida").CVE_Mensaje(ex.getMessage()).build();
+
+    return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+  }
+
 }

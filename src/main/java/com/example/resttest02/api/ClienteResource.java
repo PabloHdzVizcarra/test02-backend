@@ -6,6 +6,7 @@ import com.example.resttest02.dto.ClientRequest;
 import com.example.resttest02.service.ClientService;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,8 +36,12 @@ public class ClienteResource {
   }
 
   @GetMapping("/{clientID}")
-  public ResponseEntity<Integer> get(@PathVariable("clientID") @Valid @Min(1) Integer clientID) {
-    return ResponseEntity.ok(clientID);
+  public ResponseEntity<DefaultResponse> get(@PathVariable("clientID") @Valid @NotBlank String clientID) {
+    ClientDto dto = clientService.get(clientID);
+    return ResponseEntity.ok(DefaultResponse.builder()
+        .dto(dto)
+        .CVE_Mensaje("cliente encontrado con exito")
+        .build());
   }
 
   @GetMapping

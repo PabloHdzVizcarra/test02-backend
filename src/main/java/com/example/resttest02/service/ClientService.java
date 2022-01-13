@@ -5,4 +5,5 @@ import com.example.resttest02.dto.ClientRequest;
 
 public interface ClientService {
   ClientDto create(ClientRequest clientRequest);
+  ClientDto get(String id);
 }

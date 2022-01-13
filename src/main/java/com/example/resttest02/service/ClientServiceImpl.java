@@ -4,6 +4,7 @@ import com.example.resttest02.domain.Client;
 import com.example.resttest02.dto.ClientDto;
 import com.example.resttest02.dto.ClientRequest;
 import com.example.resttest02.exception.ClientAlreadyRegistered;
+import com.example.resttest02.exception.ClientNotFoundException;
 import com.example.resttest02.mapper.ClientMapper;
 import com.example.resttest02.repository.ClientRepository;
 import java.util.Optional;
@@ -22,15 +23,23 @@ public class ClientServiceImpl implements ClientService {
 
   @Override
   public ClientDto create(ClientRequest request) {
-    verifyClientExistsByEmail(request);
-    verifyClientExsistsByUsername(request.getNombre_usuario());
+    verifyClientByEmail(request);
+    verifyClientByUsername(request.getNombre_usuario());
     Client savedClient = saveClientDatabase(request);
     return mapper.clientToClientDto(savedClient);
   }
 
-  private void verifyClientExsistsByUsername(String username) {
+  @Override
+  public ClientDto get(String id) {
+    Client optionalClient =
+        repository.findById(id).orElseThrow(() -> new ClientNotFoundException(id));
+
+    return mapper.clientToClientDto(optionalClient);
+  }
+
+  private void verifyClientByUsername(String username) {
     Optional<Client> optionalClient = repository.getClientByUsername(username);
-    if (optionalClient.isPresent()){
+    if (optionalClient.isPresent()) {
       throw new ClientAlreadyRegistered(username);
     }
   }
@@ -52,11 +61,11 @@ public class ClientServiceImpl implements ClientService {
     return client;
   }
 
-  private void verifyClientExistsByEmail(ClientRequest request) {
+  private void verifyClientByEmail(ClientRequest request) {
     String email = request.getCorreo_electronico();
     Optional<Client> optionalClient = repository.getClientByCorreo(email);
 
-    if (optionalClient.isPresent()){
+    if (optionalClient.isPresent()) {
       throw new ClientAlreadyRegistered(email);
     }
   }
