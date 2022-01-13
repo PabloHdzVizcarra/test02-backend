@@ -2,7 +2,9 @@ package com.example.resttest02.service;
 
 import com.example.resttest02.domain.Client;
 import com.example.resttest02.dto.ClientDto;
+import com.example.resttest02.dto.ClientFullDto;
 import com.example.resttest02.dto.ClientRequest;
+import com.example.resttest02.dto.UpdateClientRequest;
 import com.example.resttest02.exception.ClientAlreadyRegistered;
 import com.example.resttest02.exception.ClientNotFoundException;
 import com.example.resttest02.mapper.ClientMapper;
@@ -48,6 +50,20 @@ public class ClientServiceImpl implements ClientService {
     return clientList.stream()
         .map(mapper::clientToClientDto)
         .collect(Collectors.toUnmodifiableList());
+  }
+
+  @Override
+  public ClientFullDto update(UpdateClientRequest request, String id) {
+    Client client = repository.findById(id).orElseThrow(() -> new ClientNotFoundException(id));
+
+    client.setEdad(request.getEdad());
+    client.setEstatura(request.getEstatura());
+    client.setPeso(request.getPeso());
+    client.setGEB(request.getGeb());
+
+    Client updatedClient = repository.save(client);
+    log.info("the client with id: " + id + " was be updated");
+    return mapper.clientToClientFullDto(updatedClient);
   }
 
   private void verifyClientByUsername(String username) {

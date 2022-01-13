@@ -28,8 +28,8 @@ public class Client {
   private Integer edad;
   private Double estatura;
   private Double peso;
+  private Integer GEB;
   private Double IMC;
-  private Double GEB;
   private Double ETA;
   private Long fecha_creacion;
   private Long fecha_actualizacion;
