@@ -7,7 +7,10 @@ import com.example.resttest02.exception.ClientAlreadyRegistered;
 import com.example.resttest02.exception.ClientNotFoundException;
 import com.example.resttest02.mapper.ClientMapper;
 import com.example.resttest02.repository.ClientRepository;
+import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -34,7 +37,17 @@ public class ClientServiceImpl implements ClientService {
     Client optionalClient =
         repository.findById(id).orElseThrow(() -> new ClientNotFoundException(id));
 
+    log.info("get client with id: {}", id);
     return mapper.clientToClientDto(optionalClient);
+  }
+
+  @Override
+  public Collection<ClientDto> getAll() {
+    log.info("get all clients");
+    List<Client> clientList = repository.findAll();
+    return clientList.stream()
+        .map(mapper::clientToClientDto)
+        .collect(Collectors.toUnmodifiableList());
   }
 
   private void verifyClientByUsername(String username) {

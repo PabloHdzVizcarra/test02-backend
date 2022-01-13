@@ -4,6 +4,7 @@ import com.example.resttest02.domain.DefaultResponse;
 import com.example.resttest02.dto.ClientDto;
 import com.example.resttest02.dto.ClientRequest;
 import com.example.resttest02.service.ClientService;
+import java.util.Collection;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -45,8 +46,11 @@ public class ClienteResource {
   }
 
   @GetMapping
-  public ResponseEntity<String> getAll() {
-    return ResponseEntity.ok("get all");
+  public ResponseEntity<DefaultResponse> getAll() {
+    Collection<ClientDto> all = clientService.getAll();
+    DefaultResponse response = DefaultResponse.builder()
+        .CVE_Mensaje("clientes obtenidos con exito").clientList(all).build();
+    return ResponseEntity.ok(response);
   }
 
   @PutMapping("/{clientID}")
