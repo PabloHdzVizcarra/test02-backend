@@ -5,6 +5,7 @@ import com.example.resttest02.dto.ClientDto;
 import com.example.resttest02.dto.ClientRequest;
 import com.example.resttest02.mapper.ClientMapper;
 import com.example.resttest02.repository.ClientRepository;
+import java.util.Optional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,6 +27,7 @@ public class ClientServiceImpl implements ClientService {
   }
 
   private Client createUser(ClientRequest request) {
+    verifyUserExists(request);
     Client client = new Client();
 
     client.setNombre_usuario(request.getNombre_usuario());
@@ -35,6 +37,18 @@ public class ClientServiceImpl implements ClientService {
     client.setContraseña(hashPassword(request));
 
     return client;
+  }
+
+  private void verifyUserExists(ClientRequest request) {
+    String email = request.getCorreo_electronico();
+    Optional<Client> optionalClient = repository.getClientByCorreo(email);
+
+    if (optionalClient.isPresent()){
+      throw new RuntimeException(
+          "el cliente con el email: "
+              + email
+              + " ya fue registrado anteriormente, ingresa un email diferente");
+    }
   }
 
   private String hashPassword(ClientRequest request) {
