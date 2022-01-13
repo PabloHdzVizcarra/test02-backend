@@ -1,8 +1,10 @@
 package com.example.resttest02.api;
 
 import com.example.resttest02.dto.ClientRequest;
+import com.example.resttest02.service.ClientService;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
+import lombok.AllArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -17,10 +19,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/NutriNet/Cliente")
 @Validated
+@AllArgsConstructor
 public class ClienteResource {
+
+  private final ClientService clientService;
 
   @PostMapping
   public ResponseEntity<ClientRequest> create(@Valid @RequestBody ClientRequest request) {
+    clientService.create(request);
     return ResponseEntity.ok(request);
   }
 
