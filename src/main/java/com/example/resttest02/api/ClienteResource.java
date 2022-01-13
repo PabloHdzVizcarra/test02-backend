@@ -1,5 +1,6 @@
 package com.example.resttest02.api;
 
+import com.example.resttest02.dto.ClientDto;
 import com.example.resttest02.dto.ClientRequest;
 import com.example.resttest02.service.ClientService;
 import javax.validation.Valid;
@@ -26,7 +27,7 @@ public class ClienteResource {
 
   @PostMapping
   public ResponseEntity<ClientRequest> create(@Valid @RequestBody ClientRequest request) {
-    clientService.create(request);
+    ClientDto dto = clientService.create(request);
     return ResponseEntity.ok(request);
   }
 

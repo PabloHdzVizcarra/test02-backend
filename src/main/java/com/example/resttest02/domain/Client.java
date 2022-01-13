@@ -31,19 +31,19 @@ public class Client {
   private Double IMC;
   private Double GEB;
   private Double ETA;
-  private Long fecha_creacion;
-  private Long fecha_actualizacion;
+  private Long fechaCreacion;
+  private Long fechaActualizacion;
 
   public Client() {
     setDateCreated();
   }
 
   protected void setDateCreated() {
-    if (this.fecha_creacion == null) fecha_creacion = new Date().getTime();
-    if (this.fecha_actualizacion == null) fecha_actualizacion = new Date().getTime();
+    if (this.fechaCreacion == null) fechaCreacion = new Date().getTime();
+    if (this.fechaActualizacion == null) fechaActualizacion = new Date().getTime();
   }
 
   protected void setDateUpdated() {
-    this.fecha_actualizacion = new Date().getTime();
+    this.fechaActualizacion = new Date().getTime();
   }
 }
