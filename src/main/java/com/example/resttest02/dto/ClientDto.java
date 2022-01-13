@@ -9,6 +9,6 @@ public class ClientDto {
   private String nombre;
   private String apellidos;
   private String correo_electronico;
-  private String fechaCreacion;
-  private String fechaActualizacion;
+  private String fecha_creacion;
+  private String fecha_actualizacion;
 }

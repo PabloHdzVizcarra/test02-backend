@@ -12,11 +12,11 @@ import org.mapstruct.Mapping;
 public interface ClientMapper {
 
   @Mapping(
-      target = "fechaCreacion",
-      expression = "java(dateISOFormat(client.getFechaCreacion()))")
+      target = "fecha_creacion",
+      expression = "java(dateISOFormat(client.getFecha_creacion()))")
   @Mapping(
-      target = "fechaActualizacion",
-      expression = "java(dateISOFormat(client.getFechaActualizacion()))")
+      target = "fecha_actualizacion",
+      expression = "java(dateISOFormat(client.getFecha_actualizacion()))")
   ClientDto clientToClientDto(Client client);
 
   default String dateISOFormat(Long date) {
