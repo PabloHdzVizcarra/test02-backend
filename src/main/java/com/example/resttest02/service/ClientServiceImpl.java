@@ -3,6 +3,7 @@ package com.example.resttest02.service;
 import com.example.resttest02.domain.Client;
 import com.example.resttest02.dto.ClientDto;
 import com.example.resttest02.dto.ClientRequest;
+import com.example.resttest02.exception.ClientAlreadyRegistered;
 import com.example.resttest02.mapper.ClientMapper;
 import com.example.resttest02.repository.ClientRepository;
 import java.util.Optional;
@@ -21,13 +22,17 @@ public class ClientServiceImpl implements ClientService {
 
   @Override
   public ClientDto create(ClientRequest request) {
-    Client client = createUser(request);
-    Client savedClient = repository.save(client);
+    verifyClientExists(request);
+    Client savedClient = saveClientDatabase(request);
     return mapper.clientToClientDto(savedClient);
   }
 
+  private Client saveClientDatabase(ClientRequest request) {
+    Client client = createUser(request);
+    return repository.save(client);
+  }
+
   private Client createUser(ClientRequest request) {
-    verifyUserExists(request);
     Client client = new Client();
 
     client.setNombre_usuario(request.getNombre_usuario());
@@ -39,15 +44,12 @@ public class ClientServiceImpl implements ClientService {
     return client;
   }
 
-  private void verifyUserExists(ClientRequest request) {
+  private void verifyClientExists(ClientRequest request) {
     String email = request.getCorreo_electronico();
     Optional<Client> optionalClient = repository.getClientByCorreo(email);
 
     if (optionalClient.isPresent()){
-      throw new RuntimeException(
-          "el cliente con el email: "
-              + email
-              + " ya fue registrado anteriormente, ingresa un email diferente");
+      throw new ClientAlreadyRegistered(email);
     }
   }
 
