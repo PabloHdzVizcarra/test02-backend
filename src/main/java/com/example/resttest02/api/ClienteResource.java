@@ -1,11 +1,13 @@
 package com.example.resttest02.api;
 
+import com.example.resttest02.domain.DefaultResponse;
 import com.example.resttest02.dto.ClientDto;
 import com.example.resttest02.dto.ClientRequest;
 import com.example.resttest02.service.ClientService;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -26,13 +28,15 @@ public class ClienteResource {
   private final ClientService clientService;
 
   @PostMapping
-  public ResponseEntity<ClientRequest> create(@Valid @RequestBody ClientRequest request) {
+  public ResponseEntity<DefaultResponse> create(@Valid @RequestBody ClientRequest request) {
     ClientDto dto = clientService.create(request);
-    return ResponseEntity.ok(request);
+    DefaultResponse response = DefaultResponse.builder().dto(dto)
+        .cveMessage("el cliente se creo con exito").build();
+    return new ResponseEntity<>(response, HttpStatus.CREATED);
   }
 
   @GetMapping("/{clientID}")
-  public ResponseEntity<Integer> get(@PathVariable("clientID") @Valid @Min(1) Integer clientID ) {
+  public ResponseEntity<Integer> get(@PathVariable("clientID") @Valid @Min(1) Integer clientID) {
     return ResponseEntity.ok(clientID);
   }
 
@@ -45,5 +49,4 @@ public class ClienteResource {
   public ResponseEntity<String> update(@PathVariable("clientID") @Valid @Min(1) Integer clientID) {
     return ResponseEntity.ok("update client");
   }
-
 }
