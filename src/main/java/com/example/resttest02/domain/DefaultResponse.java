@@ -8,6 +8,6 @@ import lombok.Data;
 @Data
 public class DefaultResponse {
   private ClientDto dto;
-  private String cveMessage;
-  private String cveError;
+  private String CVE_Error;
+  private String CVE_Mensaje;
 }

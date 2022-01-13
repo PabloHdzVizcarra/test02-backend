@@ -8,7 +8,6 @@ import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,7 +30,7 @@ public class ClienteResource {
   public ResponseEntity<DefaultResponse> create(@Valid @RequestBody ClientRequest request) {
     ClientDto dto = clientService.create(request);
     DefaultResponse response = DefaultResponse.builder().dto(dto)
-        .cveMessage("el cliente se creo con exito").build();
+        .CVE_Mensaje("el cliente se creo con exito").build();
     return new ResponseEntity<>(response, HttpStatus.CREATED);
   }
 
