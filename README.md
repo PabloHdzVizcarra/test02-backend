@@ -22,5 +22,11 @@ java -jar target/{nombre-jar-creado}
 
 reemplazando el nombre por el archivo jar creado anteriormente
 
-> Warning: esta aplicacion se contruyo con una database mongodb alojada en mongodb atlas, debes 
+> Warning: esta aplicacion se contruyo con una database mongodb alojada en mongodb atlas, debes
 > configurarla antes de iniciar la aplicacion
+
+# Test03 - PostgreSQL
+
+No entendi muy bien el requirimiento de esta prueba por lo que decidi crear una carpeta llamada
+_test03-posgresql_ donde se almacena un solo archivo sql llamado **query.sql** con todo lo relacionado
+al ejercicio
