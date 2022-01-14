@@ -1,0 +1,6 @@
+spring:
+  data:
+    mongodb:
+      database: <name-database>
+      uri: <uri-mongo>
+      authentication-database: admin
