@@ -1,12 +1,11 @@
 package com.example.resttest02.api;
 
 import com.example.resttest02.domain.DefaultResponse;
-import com.example.resttest02.dto.ClientDto;
 import com.example.resttest02.dto.ClientFullDto;
 import com.example.resttest02.dto.ClientRequest;
 import com.example.resttest02.dto.UpdateClientRequest;
 import com.example.resttest02.service.ClientService;
-import java.util.Collection;
+import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -31,23 +30,23 @@ public class ClienteResource {
 
   @PostMapping
   public ResponseEntity<DefaultResponse> create(@Valid @RequestBody ClientRequest request) {
-    ClientDto dto = clientService.create(request);
+    ClientFullDto dto = clientService.create(request);
     DefaultResponse response =
         DefaultResponse.builder().dto(dto).CVE_Mensaje("el cliente se creo con exito").build();
     return new ResponseEntity<>(response, HttpStatus.CREATED);
   }
 
   @GetMapping("/{clientID}")
-  public ResponseEntity<DefaultResponse> get(
+  public ResponseEntity<?> get(
       @PathVariable("clientID") @Valid @NotBlank String clientID) {
-    ClientDto dto = clientService.get(clientID);
+    ClientFullDto dto = clientService.get(clientID);
     return ResponseEntity.ok(
         DefaultResponse.builder().dto(dto).CVE_Mensaje("cliente encontrado con exito").build());
   }
 
   @GetMapping
   public ResponseEntity<DefaultResponse> getAll() {
-    Collection<ClientDto> all = clientService.getAll();
+    List<ClientFullDto> all = clientService.getAll();
     DefaultResponse response =
         DefaultResponse.builder()
             .CVE_Mensaje("clientes obtenidos con exito")

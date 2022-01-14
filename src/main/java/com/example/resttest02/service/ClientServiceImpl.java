@@ -1,7 +1,6 @@
 package com.example.resttest02.service;
 
 import com.example.resttest02.domain.Client;
-import com.example.resttest02.dto.ClientDto;
 import com.example.resttest02.dto.ClientFullDto;
 import com.example.resttest02.dto.ClientRequest;
 import com.example.resttest02.dto.UpdateClientRequest;
@@ -9,7 +8,6 @@ import com.example.resttest02.exception.ClientAlreadyRegistered;
 import com.example.resttest02.exception.ClientNotFoundException;
 import com.example.resttest02.mapper.ClientMapper;
 import com.example.resttest02.repository.ClientRepository;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -27,29 +25,29 @@ public class ClientServiceImpl implements ClientService {
   private final ClientMapper mapper;
 
   @Override
-  public ClientDto create(ClientRequest request) {
+  public ClientFullDto create(ClientRequest request) {
     verifyClientByEmail(request);
     verifyClientByUsername(request.getNombre_usuario());
     Client savedClient = saveClientDatabase(request);
     log.info("success client creation");
-    return mapper.clientToClientDto(savedClient);
+    return mapper.clientToClientFullDto(savedClient);
   }
 
   @Override
-  public ClientDto get(String id) {
+  public ClientFullDto get(String id) {
     Client optionalClient =
         repository.findById(id).orElseThrow(() -> new ClientNotFoundException(id));
 
     log.info("get client with id: {}", id);
-    return mapper.clientToClientDto(optionalClient);
+    return mapper.clientToClientFullDto(optionalClient);
   }
 
   @Override
-  public Collection<ClientDto> getAll() {
+  public List<ClientFullDto> getAll() {
     log.info("get all clients");
     List<Client> clientList = repository.findAll();
     return clientList.stream()
-        .map(mapper::clientToClientDto)
+        .map(mapper::clientToClientFullDto)
         .collect(Collectors.toUnmodifiableList());
   }
 

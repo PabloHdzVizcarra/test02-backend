@@ -1,17 +1,16 @@
 package com.example.resttest02.service;
 
-import com.example.resttest02.dto.ClientDto;
 import com.example.resttest02.dto.ClientFullDto;
 import com.example.resttest02.dto.ClientRequest;
 import com.example.resttest02.dto.UpdateClientRequest;
-import java.util.Collection;
+import java.util.List;
 
 public interface ClientService {
-  ClientDto create(ClientRequest clientRequest);
+  ClientFullDto create(ClientRequest clientRequest);
 
-  ClientDto get(String id);
+  ClientFullDto get(String id);
 
-  Collection<ClientDto> getAll();
+  List<ClientFullDto> getAll();
 
   ClientFullDto update(UpdateClientRequest request, String id);
 }

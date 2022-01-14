@@ -9,9 +9,9 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @Data
 public class DefaultResponse {
-  private ClientDto dto;
+  private ClientFullDto dto;
   private ClientFullDto clientUpdated;
   private String CVE_Error;
   private String CVE_Mensaje;
-  private Collection<ClientDto> clientList;
+  private Collection<ClientFullDto> clientList;
 }
