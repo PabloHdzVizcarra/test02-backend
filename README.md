@@ -22,3 +22,5 @@ java -jar target/{nombre-jar-creado}
 
 reemplazando el nombre por el archivo jar creado anteriormente
 
+> Warning: esta aplicacion se contruyo con una database mongodb alojada en mongodb atlas, debes 
+> configurarla antes de iniciar la aplicacion
